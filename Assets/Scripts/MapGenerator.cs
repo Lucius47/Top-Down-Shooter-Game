@@ -45,6 +45,16 @@ public class MapGenerator : MonoBehaviour
     {
         currentMap = maps[mapIndex];
 
+        // Set Random foreground and background colors, obstacle precentage, seed
+        currentMap.foregroundColor = Random.ColorHSV();
+        //currentMap.backgroundColor = Random.ColorHSV();
+        currentMap.backgroundColor.r = currentMap.foregroundColor.r - 0.5f;
+        currentMap.backgroundColor.g = currentMap.foregroundColor.g - 0.5f;
+        currentMap.backgroundColor.b = currentMap.foregroundColor.b - 0.5f;
+
+        currentMap.obstaclePercent = Random.Range(0.2f, 1f);
+        currentMap.seed = Random.Range(1, 1000);
+
         tileMap = new Transform[currentMap.mapSize.x, currentMap.mapSize.y];
 
         System.Random prng = new System.Random(currentMap.seed);
@@ -248,12 +258,17 @@ public class MapGenerator : MonoBehaviour
     public class Map
     {
         public Coord mapSize;
-        [Range (0, 1)]
+        //[Range (0, 1)]
+        [HideInInspector]
         public float obstaclePercent;
+        [HideInInspector]
         public int seed;
         public float minObstacleHeight;
         public float maxObstacleHeight;
+
+        [HideInInspector]
         public Color foregroundColor;
+        [HideInInspector]
         public Color backgroundColor;
 
         public Coord mapCentre
